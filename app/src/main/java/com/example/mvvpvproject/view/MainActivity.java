@@ -1,6 +1,8 @@
 package com.example.mvvpvproject.view;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String resultText = mainActivityViewModel.additionFunction(editText1.getText().toString(),editText2.getText().toString());
-                Toast.makeText(MainActivity.this, "Sum is "+resultText, Toast.LENGTH_SHORT).show();
+                mainActivityViewModel.additionFunction(editText1.getText().toString(),editText2.getText().toString()).observe(MainActivity.this, new Observer<String>() {
+                    @Override
+                    public void onChanged(@Nullable String s) {
+                        Toast.makeText(MainActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
     }
